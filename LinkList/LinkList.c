@@ -11,6 +11,7 @@ typedef ListNode *ListNodePtr;
 
 void insert( ListNodePtr *sPtr, char value);
 char delete( ListNodePtr *sPtr, char value);
+void deleteAllList(ListNodePtr *sPtr);
 int isEmpty ( ListNodePtr sPtr);
 void printList (ListNodePtr currentPtr);
 void instructions(void);
@@ -22,7 +23,7 @@ int main(){
 	
 	
 	
-	while ( choice != 3){
+	while ( choice != 4){
 		instructions();
 		printf("? ");
 		scanf("%d", &choice);
@@ -48,13 +49,16 @@ int main(){
 						printList( startPtr);
 					}
 				}
-			else {
-				printf("List is empty. \n\n");
-			}
-			break;	
-		}
-		
-						
+				else {
+					printf("List is empty. \n\n");
+				}
+				break;
+			case 3: 
+				deleteAllList(&startPtr);
+				printf("Delete All List!!\n\n");
+				printList(startPtr);
+				break;
+		}					
 	}
 
 	
@@ -65,7 +69,8 @@ void instructions(){
 	printf("Enter your choice:\n"
 	"	1 to insert an element into the list.\n"
 	"	2 to delete an element from the list.\n"
-	"	3 to end.\n");
+	"	3 to All lists.\n"
+	"	4 to end.\n");
 }
 
 void insert(ListNodePtr *sPtr, char value){
@@ -133,6 +138,19 @@ char delete( ListNodePtr *sPtr, char value){
 	}
 	
 	return '\0';
+}
+
+void deleteAllList(ListNodePtr *sPtr){
+	ListNodePtr currentPtr = *sPtr;
+	ListNodePtr tempPtr;
+	
+	while(currentPtr != NULL){
+		tempPtr = currentPtr;
+		currentPtr = currentPtr->nextPtr;
+		free(tempPtr);
+	}
+	
+	*sPtr = NULL;
 }
 
 int isEmpty( ListNodePtr sPtr){
