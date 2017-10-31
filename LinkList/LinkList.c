@@ -15,6 +15,7 @@ void deleteAllList(ListNodePtr *sPtr);
 int isEmpty ( ListNodePtr sPtr);
 void printList (ListNodePtr currentPtr);
 void instructions(void);
+void swap(ListNodePtr *sPtr);
 
 int main(){
 	ListNodePtr startPtr = NULL;
@@ -23,7 +24,7 @@ int main(){
 	
 	
 	
-	while ( choice != 4){
+	while ( choice != 5){
 		instructions();
 		printf("? ");
 		scanf("%d", &choice);
@@ -58,6 +59,12 @@ int main(){
 				printf("Delete All List!!\n\n");
 				printList(startPtr);
 				break;
+			
+			case 4:
+				swap(&startPtr);
+				printf("Swap!!");
+				printList(startPtr);
+				break;
 		}					
 	}
 
@@ -70,7 +77,8 @@ void instructions(){
 	"	1 to insert an element into the list.\n"
 	"	2 to delete an element from the list.\n"
 	"	3 to All lists.\n"
-	"	4 to end.\n");
+	"	4 swap List\n"
+	"	5 to end.\n");
 }
 
 void insert(ListNodePtr *sPtr, char value){
@@ -173,4 +181,15 @@ void printList(ListNodePtr currentPtr){
 		
 		printf("##########################\n");
 	}
+}
+
+void swap(ListNodePtr *sPtr){
+	ListNodePtr currentPtr = *sPtr;
+	ListNodePtr savePtr = currentPtr;
+	
+	currentPtr = currentPtr->nextPtr;
+	currentPtr->nextPtr = savePtr;
+	savePtr->nextPtr = NULL;
+	
+	*sPtr = currentPtr;
 }
