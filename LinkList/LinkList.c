@@ -20,27 +20,41 @@ int main(){
 	int choice;
 	char item;
 	
-	instructions();
-//	printf("? ");
-//	scanf("%d", &choice);
 	
-//	printf("Enter a character: ");
-//	scanf("\n%c", &item);
-//	insert(&startPtr, item);
-//	
-//	printf("Enter a character: ");
-//	scanf("\n%c", &item);
-//	insert(&startPtr, item);
 	
 	while ( choice != 3){
+		instructions();
 		printf("? ");
 		scanf("%d", &choice);
-		if(choice == 1){
-			printf("Enter a character: ");
-			scanf("\n%c", &item);
-			insert(&startPtr, item);
-			printList(startPtr);
-		}		
+		
+		switch( choice ){
+			case 1:
+				printf("Enter a character: ");
+				scanf("\n%c", &item);
+				insert(&startPtr, item);
+				printList(startPtr);
+				break;
+			case 2:
+				if( !isEmpty(startPtr)){
+					printf("Enter character to be deleted: ");
+					scanf("\n%c", &item);
+					
+					if(delete(&startPtr,item)){ // remove item
+						printf("%c deleted. \n", item);
+						printList( startPtr);
+					}
+					else {
+						printf("%c not found. \n\n", item);
+						printList( startPtr);
+					}
+				}
+			else {
+				printf("List is empty. \n\n");
+			}
+			break;	
+		}
+		
+						
 	}
 
 	
@@ -59,7 +73,7 @@ void insert(ListNodePtr *sPtr, char value){
 	ListNodePtr previousPtr;
 	ListNodePtr currentPtr;
 	
-	newPtr = malloc(sizeof(ListNode));
+	newPtr =(ListNodePtr) malloc(sizeof(ListNode));
 	
 	if( newPtr != NULL){
 		newPtr->data = value;
@@ -87,17 +101,58 @@ void insert(ListNodePtr *sPtr, char value){
 	}
 }
 
+char delete( ListNodePtr *sPtr, char value){
+	ListNodePtr previousPtr; 
+	ListNodePtr currentPtr; //for search value
+	ListNodePtr tempPtr;//for delete value
+	
+	// firstNode	
+	if( value == (*sPtr)->data) {
+		tempPtr = *sPtr;
+		*sPtr = (*sPtr)->nextPtr;
+		free(tempPtr);
+		return value;
+	}
+	else {
+		previousPtr = *sPtr;
+		currentPtr = (*sPtr)->nextPtr;
+		
+		//find value for delete or NULL 
+		while( currentPtr != NULL && currentPtr->data != value) {
+			previousPtr = currentPtr;
+			currentPtr = currentPtr->nextPtr;
+		}
+		
+		if( currentPtr != NULL){
+			// find value for delete
+			tempPtr = currentPtr;
+			previousPtr->nextPtr = currentPtr->nextPtr;
+			free(tempPtr);
+			return value;
+		}
+	}
+	
+	return '\0';
+}
+
+int isEmpty( ListNodePtr sPtr){
+	return sPtr == NULL;
+}
+
 void printList(ListNodePtr currentPtr){
-	if(currentPtr == NULL) {
+	if(isEmpty(currentPtr)) {
 		printf(" List is empty.\n\n");
 	} else {
-		printf("The list is: \n");
 		
+		printf("The list is: \n");
+		printf("##########################\n");
 		while(currentPtr != NULL) {
 			printf("%c --> ", currentPtr->data);
 			currentPtr = currentPtr->nextPtr;
 		}
 		
-		printf("NULL\n\n");
+		printf("NULL \n");
+		
+		printf("##########################\n");
 	}
 }
