@@ -13,14 +13,16 @@ int sum_leaf(TREE t);
 int sum_allNode(TREE t);
 
 int main() {
-	TREE node2, node4, node9, node7;
+	TREE node2, node4, node9, node7, node5, node8;
 	int sum = 0;
+	node8 = mk_tree(8, NULL, NULL);
 	node2 = mk_tree(2, NULL, NULL);
+	node5 = mk_tree(5, NULL, NULL);
 	node9 = mk_tree(9, NULL, NULL);
-	node4 = mk_tree(4, node2, NULL);
+	node4 = mk_tree(4, node2, node5);
 	node7 = mk_tree(7, node4, node9);
 	
-	sum = validate_bst(node7);
+	sum = validate_bst2(node7);
 	printf("%d", sum);
 	
 }
@@ -44,6 +46,19 @@ int validate_bst(TREE t){
 	}
 	
 	return 1;
+}
+
+int validate_bst2(TREE t){
+	if(t == NULL) {
+		return 1;
+	}
+	
+	if(t->left != NULL && maxValue(t->left) >= t->data || t->right != NULL && minValue(t->right) <= t->data){
+		return 0 && validate_bst2(t->left) && validate_bst2(t->right);
+	} else {
+		return 1 && validate_bst2(t->left) && validate_bst2(t->right);
+	}	
+	
 }
 
 int maxValue(TREE t) {
