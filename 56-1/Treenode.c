@@ -25,34 +25,8 @@ int main() {
 	
 }
 
-int sum_allNode(TREE t) {
-	if(t == NULL) {
-		return 0;
-	}
-	
-	return t->data + sum_allNode(t->left) + sum_allNode(t->right) ;
-}
 
-//4.4
-int sum_leaf(TREE t){
-	int lsum;
-	int rsum;
-	
-	if(t == NULL) {
-		return 0;
-	}
-	
-
-	if(t->left == NULL && t->right == NULL ){
-		//printf("%d \n", t->data);
-		return t->data;
-	}
-	else {
-		return sum_leaf(t->left) + sum_leaf(t->right);
-	}
-				
-}
-
+//2.3
 int validate_bst(TREE t){
 	if(t == NULL) {
 		return 1;
