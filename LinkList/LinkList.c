@@ -16,6 +16,7 @@ int isEmpty ( ListNodePtr sPtr);
 void printList (ListNodePtr currentPtr);
 void instructions(void);
 void swap(ListNodePtr *sPtr);
+void reverseList(ListNodePtr *sPtr);
 
 int main(){
 	ListNodePtr startPtr = NULL;
@@ -24,7 +25,7 @@ int main(){
 	
 	
 	
-	while ( choice != 5){
+	while ( choice != 6){
 		instructions();
 		printf("? ");
 		scanf("%d", &choice);
@@ -65,6 +66,13 @@ int main(){
 				printf("Swap!!");
 				printList(startPtr);
 				break;
+			case 5:
+				if(!isEmpty(startPtr)){
+					reverseList(&startPtr);
+					printf("Reverse List Success!!!!\n\n");	
+				}
+				printList(startPtr);
+				break;
 		}					
 	}
 
@@ -77,8 +85,9 @@ void instructions(){
 	"	1 to insert an element into the list.\n"
 	"	2 to delete an element from the list.\n"
 	"	3 to All lists.\n"
-	"	4 swap List\n"
-	"	5 to end.\n");
+	"	4 swap List.\n"
+	"	5 reverse List.\n"
+	"	6 to end.\n");
 }
 
 void insert(ListNodePtr *sPtr, char value){
@@ -170,7 +179,7 @@ void printList(ListNodePtr currentPtr){
 		printf(" List is empty.\n\n");
 	} else {
 		
-		printf("The list is: \n");
+		printf("\nThe list is: \n\n");
 		printf("##########################\n");
 		while(currentPtr != NULL) {
 			printf("%c --> ", currentPtr->data);
@@ -179,7 +188,7 @@ void printList(ListNodePtr currentPtr){
 		
 		printf("NULL \n");
 		
-		printf("##########################\n");
+		printf("##########################\n\n");
 	}
 }
 
@@ -190,6 +199,26 @@ void swap(ListNodePtr *sPtr){
 	currentPtr = currentPtr->nextPtr;
 	currentPtr->nextPtr = savePtr;
 	savePtr->nextPtr = NULL;
+	
+	*sPtr = currentPtr;
+}
+
+void reverseList(ListNodePtr *sPtr){
+	ListNodePtr HeadPtr = *sPtr;
+	ListNodePtr currentPtr = HeadPtr;
+	ListNodePtr current2Ptr = HeadPtr;
+	
+	// 1st Chang HeadNode to TailNode
+	HeadPtr = HeadPtr->nextPtr;
+	currentPtr->nextPtr = NULL; 
+	
+	while(HeadPtr != NULL){
+		currentPtr = HeadPtr;
+		HeadPtr = HeadPtr->nextPtr;
+		currentPtr->nextPtr = current2Ptr;
+		current2Ptr = currentPtr;
+	}
+	
 	
 	*sPtr = currentPtr;
 }
