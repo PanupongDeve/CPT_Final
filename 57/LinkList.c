@@ -49,6 +49,23 @@ void modify_data(LNP node, int new_value) {
 	}
 }
 
+void insert_in_order(LNP head, int data) {
+	LNP current = head;
+	LNP previous = NULL;
+	LNP newNode;
+	
+	newNode = (LNP)malloc(sizeof(LISTNODE));
+	newNode->data = data;
+	newNode->next = NULL;
+	
+	while(current != NULL) {
+		printf("%d ", current->data);
+		
+		current = current->next;
+	}
+	
+}
+
 int main() {
 	LNP lst = NULL;
 	int i;
@@ -57,8 +74,8 @@ int main() {
 		insert(&lst,i);
 	}
 	
-	printList(lst);
-	findUpdate(lst, 9, 90);
-	printList(lst);
+	//printList(lst);
+	insert_in_order(lst, 8);
+	//printList(lst);
 	return 0;
 }
