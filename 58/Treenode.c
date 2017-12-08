@@ -12,6 +12,7 @@ TREE mk_tree(int x, TREE left_tree, TREE right_tree);
 int sum_leaf(TREE t);
 int sum_allNode(TREE t);
 
+
 int main() {
 	TREE node2, node4, node9, node7;
 	int sum = 0;
